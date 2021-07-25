@@ -14,16 +14,27 @@ def defaultsearch ( defaulttosearch ):
     defaultquery = f"SELECT plantid,common_name,location,notes FROM plants WHERE common_name like '%{defaulttosearch}%';"
     indoorcursor.execute(defaultquery)
     data = indoorcursor.fetchall()
+    if not data:  
+        print("No such plant in this collection yet")
+    else:
+        pprint.pprint(data)
+
+def extrainfodump ( extrainfotosearch ):
+    extrainfotosearch = sys.argv[2]
+
+    extrainfoquery = f"SELECT * FROM plants WHERE common_name like '%{extrainfotosearch}%';"
+    indoorcursor.execute(extrainfoquery)
+    data = indoorcursor.fetchall()
     if data != None:
         pprint.pprint(data)
     else:
         print("No such plant in this collection yet")
 
-def namesearch ( nametosearch ):
-    nametosearch = sys.argv[2]
+def flowersearch ( flowertosearch ):
+    flowertosearch = sys.argv[2]
 
-    namequery = f"SELECT common_name FROM plants WHERE common_name like '%{nametosearch}%';"
-    indoorcursor.execute(namequery)
+    flowerquery = f"SELECT common_name FROM plants WHERE flowering='{flowertosearch}';"
+    indoorcursor.execute(flowerquery)
     data = indoorcursor.fetchall()
     if data != None:
         pprint.pprint(data)
@@ -52,55 +63,22 @@ def latinnamesearch ( latinnametosearch ):
     else:
         print("No such plant in this collection yet")
 
-def vendorsearch ( vendortosearch ):
-    vendortosearch = sys.argv[2]
-
-    vendorquery = f"SELECT common_name,vendor FROM plants WHERE vendor like '%{vendortosearch}%';"
-    indoorcursor.execute(vendorquery)
-    data = indoorcursor.fetchall()
-    if data != None:
-        pprint.pprint(data)
-    else:
-        print("No such plant in this collection yet")
-
-def planttypesearch ( planttypetosearch ):
-    planttypetosearch = sys.argv[2]
-
-    planttypequery = f"SELECT common_name,plant_group FROM plants WHERE plant_group like '%{planttypetosearch}%';"
-    indoorcursor.execute(planttypequery)
-    data = indoorcursor.fetchall()
-    if data != None:
-        pprint.pprint(data)
-    else:
-        print("No such plant in this collection yet")
-
-def extrainfodump ( extrainfotosearch ):
-    extrainfotosearch = sys.argv[2]
-
-    extrainfoquery = f"SELECT * FROM plants WHERE common_name like '%{extrainfotosearch}%';"
-    indoorcursor.execute(extrainfoquery)
-    data = indoorcursor.fetchall()
-    if data != None:
-        pprint.pprint(data)
-    else:
-        print("No such plant in this collection yet")
-
-def flowersearch ( flowertosearch ):
-    flowertosearch = sys.argv[2]
-
-    flowerquery = f"SELECT common_name FROM plants WHERE flowering='{flowertosearch}';"
-    indoorcursor.execute(flowerquery)
-    data = indoorcursor.fetchall()
-    if data != None:
-        pprint.pprint(data)
-    else:
-        print("No such plant in this collection yet")
-
 def locationsearch ( locationtosearch ):
     locationtosearch = sys.argv[2]
 
     locationquery = f"SELECT common_name,location FROM plants WHERE location like '%{locationtosearch}%';"
     indoorcursor.execute(locationquery)
+    data = indoorcursor.fetchall()
+    if data != None:
+        pprint.pprint(data)
+    else:
+        print("No such plant in this collection yet")
+
+def commonnamesearch ( commonnametosearch ):
+    commonnametosearch = sys.argv[2]
+
+    commonnamequery = f"SELECT common_name FROM plants WHERE common_name like '%{commonnametosearch}%';"
+    indoorcursor.execute(commonnamequery)
     data = indoorcursor.fetchall()
     if data != None:
         pprint.pprint(data)
@@ -118,6 +96,17 @@ def notessearch ( notestosearch ):
     else:
         print("No such plant in this collection yet")
 
+def plantgroupsearch ( plantgrouptosearch ):
+    plantgrouptosearch = sys.argv[2]
+
+    plantgroupquery = f"SELECT common_name FROM plants WHERE plant_group like '%{plantgrouptosearch}%';"
+    indoorcursor.execute(plantgroupquery)
+    data = indoorcursor.fetchall()
+    if data != None:
+        pprint.pprint(data)
+    else:
+        print("No such plant in this collection yet")
+
 def sunlightsearch ( sunlighttosearch ):
     sunlighttosearch = sys.argv[2]
 
@@ -129,18 +118,29 @@ def sunlightsearch ( sunlighttosearch ):
     else:
         print("No such plant in this collection yet")
 
+def vendorsearch ( vendortosearch ):
+    vendortosearch = sys.argv[2]
+
+    vendorquery = f"SELECT common_name,vendor FROM plants WHERE vendor like '%{vendortosearch}%';"
+    indoorcursor.execute(vendorquery)
+    data = indoorcursor.fetchall()
+    if data != None:
+        pprint.pprint(data)
+    else:
+        print("no such plant in this collection yet")
+
 parser = argparse.ArgumentParser()
 parser.add_argument("default",nargs='?',type=defaultsearch)
 parser.add_argument('-b', type=latinnamesearch,action='store')
-parser.add_argument('-c', type=namesearch,action='store')
+parser.add_argument('-c', type=commonnamesearch,action='store')
 parser.add_argument('-d', action='store')
 parser.add_argument('-e', type=extrainfodump,action='store')
 parser.add_argument('-f', type=flowersearch,action='store')
+parser.add_argument('-g', type=plantgroupsearch,action='store')
 parser.add_argument('-i', type=idsearch,action='store')
 parser.add_argument('-l', type=locationsearch,action='store')
 parser.add_argument('-n', type=notessearch,action='store')
 parser.add_argument('-s', type=sunlightsearch,action='store')
-parser.add_argument('-t', type=planttypesearch,action='store')
 parser.add_argument('-v', type=vendorsearch,action='store')
 
 args = parser.parse_args()
