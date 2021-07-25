@@ -1,23 +1,12 @@
 #!/usr/bin/python3
 
-import sys, argparse
+import argparse, pprint, sys
 import mysql.connector as msc
 from mysql.connector import errorcode
 
 indoorconnection = msc.connect(option_files='/etc/mysql/conf.d/pbcli.cnf')
 
 indoorcursor = indoorconnection.cursor()
-
-generalquery = "select * from plants"
-indoorcursor.execute(generalquery)
-
-indoordata = indoorcursor.fetchall()
-indoorrecords = indoorcursor.rowcount
-
-#print("Total number of indoor plant records: ",indoorrecords)
-#
-#for row in indoordata:
-#    print(row[1])
 
 def defaultsearch ( defaulttosearch ):
     defaulttosearch = sys.argv[1]
@@ -26,7 +15,7 @@ def defaultsearch ( defaulttosearch ):
     indoorcursor.execute(defaultquery)
     data = indoorcursor.fetchall()
     if data != None:
-        print(data,end='\n')
+        pprint.pprint(data)
     else:
         print("No such plant in this collection yet")
 
@@ -37,7 +26,7 @@ def namesearch ( nametosearch ):
     indoorcursor.execute(namequery)
     data = indoorcursor.fetchall()
     if data != None:
-        print(data)
+        pprint.pprint(data)
     else:
         print("No such plant in this collection yet")
 
@@ -48,7 +37,7 @@ def idsearch ( idtosearch ):
     indoorcursor.execute(idquery)
     data = indoorcursor.fetchall()
     if data != None:
-        print(data)
+        pprint.pprint(data)
     else:
         print("No such plant in this collection yet")
 
@@ -59,7 +48,7 @@ def latinnamesearch ( latinnametosearch ):
     indoorcursor.execute(latinnamequery)
     data = indoorcursor.fetchall()
     if data != None:
-        print(data)
+        pprint.pprint(data)
     else:
         print("No such plant in this collection yet")
 
@@ -70,7 +59,7 @@ def vendorsearch ( vendortosearch ):
     indoorcursor.execute(vendorquery)
     data = indoorcursor.fetchall()
     if data != None:
-        print(data)
+        pprint.pprint(data)
     else:
         print("No such plant in this collection yet")
 
@@ -81,7 +70,18 @@ def planttypesearch ( planttypetosearch ):
     indoorcursor.execute(planttypequery)
     data = indoorcursor.fetchall()
     if data != None:
-        print(data)
+        pprint.pprint(data)
+    else:
+        print("No such plant in this collection yet")
+
+def extrainfodump ( extrainfotosearch ):
+    extrainfotosearch = sys.argv[2]
+
+    extrainfoquery = f"SELECT * FROM plants WHERE common_name like '%{extrainfotosearch}%';"
+    indoorcursor.execute(extrainfoquery)
+    data = indoorcursor.fetchall()
+    if data != None:
+        pprint.pprint(data)
     else:
         print("No such plant in this collection yet")
 
@@ -92,7 +92,7 @@ def flowersearch ( flowertosearch ):
     indoorcursor.execute(flowerquery)
     data = indoorcursor.fetchall()
     if data != None:
-        print(data)
+        pprint.pprint(data)
     else:
         print("No such plant in this collection yet")
 
@@ -103,7 +103,7 @@ def locationsearch ( locationtosearch ):
     indoorcursor.execute(locationquery)
     data = indoorcursor.fetchall()
     if data != None:
-        print(data)
+        pprint.pprint(data)
     else:
         print("No such plant in this collection yet")
 
@@ -114,7 +114,7 @@ def notessearch ( notestosearch ):
     indoorcursor.execute(notesquery)
     data = indoorcursor.fetchall()
     if data != None:
-        print(data)
+        pprint.pprint(data)
     else:
         print("No such plant in this collection yet")
 
@@ -125,7 +125,7 @@ def sunlightsearch ( sunlighttosearch ):
     indoorcursor.execute(sunlightquery)
     data = indoorcursor.fetchall()
     if data != None:
-        print(data)
+        pprint.pprint(data)
     else:
         print("No such plant in this collection yet")
 
@@ -134,6 +134,7 @@ parser.add_argument("default",nargs='?',type=defaultsearch)
 parser.add_argument('-b', type=latinnamesearch,action='store')
 parser.add_argument('-c', type=namesearch,action='store')
 parser.add_argument('-d', action='store')
+parser.add_argument('-e', type=extrainfodump,action='store')
 parser.add_argument('-f', type=flowersearch,action='store')
 parser.add_argument('-i', type=idsearch,action='store')
 parser.add_argument('-l', type=locationsearch,action='store')
@@ -143,3 +144,14 @@ parser.add_argument('-t', type=planttypesearch,action='store')
 parser.add_argument('-v', type=vendorsearch,action='store')
 
 args = parser.parse_args()
+
+#generalquery = "select * from plants"
+#indoorcursor.execute(generalquery)
+#
+#indoordata = indoorcursor.fetchall()
+#indoorrecords = indoorcursor.rowcount
+
+#print("Total number of indoor plant records: ",indoorrecords)
+#
+#for row in indoordata:
+#    print(row[1])
