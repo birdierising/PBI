@@ -4,11 +4,14 @@ import sys, argparse
 import mysql.connector as msc
 from mysql.connector import errorcode
 
-indoorconnection = msc.connect(
-        host='localhost',
-        user='pbi',
-        unix_socket = '/tmp/mysqld.sock',
-        database='indoorplants')
+indoorconnection = msc.connect(option_files='/etc/mysql/conf.d/pbcli.cnf')
+
+#indoorconnection = msc.connect(
+#        host='localhost',
+#        user='pbi',
+#        password=
+#        unix_socket = '/tmp/mysqld.sock',
+#        database='indoorplants')
 
 indoorcursor = indoorconnection.cursor()
 
