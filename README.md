@@ -1,5 +1,4 @@
 # PBI (pbcli)
-Coming soon!
-A Python3 interface to query a MySQL instance with databases for indoor plants.
+An interface for your planterbase.
+Queries a local plant inventory database with Python3.
 
-Upcoming features: Outdoor plant databases, write capabilties, mobile updates
