@@ -7,7 +7,6 @@ from mysql.connector import errorcode
 indoorconnection = msc.connect(
         host='localhost',
         user='pbi',
-        password='neePh9unigh5Aigi',
         unix_socket = '/tmp/mysqld.sock',
         database='indoorplants')
 
