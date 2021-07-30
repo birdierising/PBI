@@ -11,10 +11,9 @@ CREATE TABLE `plants` (
   `vendor` varchar(100) DEFAULT NULL,
   `sunlight` varchar(50) DEFAULT NULL,
   `water` varchar(50) DEFAULT NULL,
-  `flowering` char(1) DEFAULT NULL,
+  `flowering` char(3) DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
   `notes` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`plantid`),
-  KEY `common_name` (`common_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
+  UNIQUE KEY `common_name` (`common_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4;
