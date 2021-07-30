@@ -1,4 +1,4 @@
 # PBI (pbcli)
 An interface for your planterbase.
-Queries a local plant inventory database with Python3.
+Queries a local plant inventory MariaDB database with Python3.
 
