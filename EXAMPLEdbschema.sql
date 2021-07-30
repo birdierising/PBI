@@ -17,3 +17,4 @@ CREATE TABLE `plants` (
   PRIMARY KEY (`plantid`),
   KEY `common_name` (`common_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
