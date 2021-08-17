@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 
-import argparse, pprint, sys
+import argparse, datetime, pprint, sys
 import mysql.connector as msc
 from mysql.connector import errorcode
-import datetime
 
 indoorconnection = msc.connect(option_files='/etc/mysql/conf.d/pbcli.cnf')
 
@@ -158,14 +157,3 @@ parser.add_argument('-s', '--sunreqs', type=sunlightsearch,action='store')
 parser.add_argument('-v', '--vendor', type=vendorsearch,action='store')
 
 args = parser.parse_args()
-
-#generalquery = "select * from plants"
-#indoorcursor.execute(generalquery)
-#
-#indoordata = indoorcursor.fetchall()
-#indoorrecords = indoorcursor.rowcount
-
-#print("Total number of indoor plant records: ",indoorrecords)
-#
-#for row in indoordata:
-#    print(row[1])
