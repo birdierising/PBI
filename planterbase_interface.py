@@ -3,6 +3,7 @@
 import argparse, pprint, sys
 import mysql.connector as msc
 from mysql.connector import errorcode
+import datetime
 
 indoorconnection = msc.connect(option_files='/etc/mysql/conf.d/pbcli.cnf')
 
@@ -85,6 +86,19 @@ def commonnamesearch ( commonnametosearch ):
     else:
         pprint.pprint(data)
 
+def datesearch ( datetosearch ):
+    datetosearch = sys.argv[2]
+
+    datequery = f"SELECT common_name,date_acquired FROM plants WHERE date_acquired like '%{datetosearch}%';"
+    indoorcursor.execute(datequery)
+    data = indoorcursor.fetchall()
+    if not data:  
+        print("No plant acquired on this date!")
+    else:
+        for (common_name, date_acquired) in data:
+            print("{}: {:%b %d %Y}".format(
+                common_name, date_acquired))
+
 def notessearch ( notestosearch ):
     notestosearch = sys.argv[2]
 
@@ -133,7 +147,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("default",nargs='?',type=defaultsearch)
 parser.add_argument('-b','--binomial','--latinname', type=latinnamesearch,action='store')
 parser.add_argument('-c','--common-name', type=commonnamesearch,action='store')
-parser.add_argument('-d', '--date', action='store')
+parser.add_argument('-d', '--date', type=datesearch,action='store')
 parser.add_argument('-e', '--extras', type=extrasdump,action='store')
 parser.add_argument('-f', '--flowering', type=flowersearch,action='store')
 parser.add_argument('-g', '--group', type=plantgroupsearch,action='store')
