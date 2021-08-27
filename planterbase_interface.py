@@ -19,7 +19,9 @@ def defaultsearch ( defaulttosearch ):
     if not data:  
         print("No such plant in this collection yet")
     else:
-        pprint.pprint(data)
+        for (plantid, common_name, location, notes) in data:
+            print("{}: {}, {}, {}".format(
+                plantid, common_name, location, notes))
 
 def extrasdump ( extrastosearch ):
     extrastosearch = sys.argv[2]
@@ -41,7 +43,9 @@ def flowersearch ( flowertosearch ):
     if not data:  
         print("No such plant in this collection yet")
     else:
-        pprint.pprint(data)
+        for (common_name) in data:
+            print("{}".format(
+                common_name))
 
 def idsearch ( idtosearch ):
     idtosearch = sys.argv[2]
@@ -52,7 +56,9 @@ def idsearch ( idtosearch ):
     if not data:  
         print("No such plant in this collection yet")
     else:
-        pprint.pprint(data)
+        for (plantid, common_name) in data:
+            print("{}: {}".format(
+                plantid, common_name ))
 
 def latinnamesearch ( latinnametosearch ):
     latinnametosearch = sys.argv[2]
@@ -63,7 +69,9 @@ def latinnamesearch ( latinnametosearch ):
     if not data:  
         print("No such plant in this collection yet")
     else:
-        pprint.pprint(data)
+        for (common_name, latin_name) in data:
+            print("{}: {}".format(
+                common_name, latin_name))
 
 def locationsearch ( locationtosearch ):
     locationtosearch = sys.argv[2]
@@ -74,7 +82,9 @@ def locationsearch ( locationtosearch ):
     if not data:  
         print("No such plant in that location yet")
     else:
-        pprint.pprint(data)
+        for (common_name, location) in data:
+            print("{}: {:%b %d %Y}".format(
+                common_name, location))
 
 def commonnamesearch ( commonnametosearch ):
     commonnametosearch = sys.argv[2]
@@ -85,7 +95,9 @@ def commonnamesearch ( commonnametosearch ):
     if not data:  
         print("No such plant in this collection yet")
     else:
-        pprint.pprint(data)
+        for (common_name) in data:
+            print("{}".format(
+                common_name))
 
 def datesearch ( datetosearch ):
     datetosearch = sys.argv[2]
@@ -109,7 +121,9 @@ def notessearch ( notestosearch ):
     if not data:  
         print("No such plant with that note in this collection yet")
     else:
-        pprint.pprint(data)
+        for (common_name, notes) in data:
+            print("{}: {}".format(
+                common_name, notes))
 
 def plantgroupsearch ( plantgrouptosearch ):
     plantgrouptosearch = sys.argv[2]
@@ -118,9 +132,10 @@ def plantgroupsearch ( plantgrouptosearch ):
     indoorcursor.execute(plantgroupquery)
     data = indoorcursor.fetchall()
     if not data:  
-        print("No such group in this collection yet")
+        print("No such plant with that note in this collection yet")
     else:
-        pprint.pprint(data)
+        for common_name in data:
+            print("{}".format(common_name))
 
 def sunlightsearch ( sunlighttosearch ):
     sunlighttosearch = sys.argv[2]
@@ -131,18 +146,22 @@ def sunlightsearch ( sunlighttosearch ):
     if not data:  
         print("No such plant with those sunlight requirements in this collection yet")
     else:
-        pprint.pprint(data)
+        for (common_name, sunlight) in data:
+            print("{}: {}".format(
+                common_name, sunlight))
 
 def vendorsearch ( vendortosearch ):
     vendortosearch = sys.argv[2]
 
-    vendorquery = f"SELECT common_name,vendor FROM plants WHERE vendor like '%{vendortosearch}%';"
+    vendorquery = f"SELECT common_name FROM plants WHERE vendor like '%{vendortosearch}%';"
     indoorcursor.execute(vendorquery)
     data = indoorcursor.fetchall()
     if not data:  
         print("No such plant from that vendor yet")
     else:
-        pprint.pprint(data)
+        for (common_name) in data:
+            print("{}".format(
+                common_name))
 
 # writes section
 
